@@ -37,7 +37,8 @@ def db_connect(logger: Logger):
         records = cur.fetchall()
         
         if ("links",) not in records:
-            cur.execute("CREATE TABLE links (short_url varchar, redirect varchar, visits int)")
+            cur.execute("CREATE TABLE links (made_by varchar, short_url varchar, redirect varchar, visits int)")
+            cur.execute("CREATE TABLE users (email varchar, password varchar, role varchar, links_made int, links_limit int)")
             conn.commit()
             logger.info("✅ Created required table(s)")
         else:

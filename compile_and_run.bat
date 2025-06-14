@@ -1,0 +1,1 @@
+tsc .\app\static\dashboard.ts && python run.py

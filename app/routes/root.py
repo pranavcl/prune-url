@@ -1,18 +1,24 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, request
 from os import environ
 from app import logger, cur, INTERNAL_SERVER_ERROR_MSG
 from traceback import print_exc
+from app.helpers.check_jwt import check_jwt
 
 root_bp = Blueprint("root", __name__)
 
 @root_bp.route("/")
 def serve_index():
+    jwt_token = request.cookies.get("token")
+
+    if type(check_jwt(jwt_token)) != str:
+        return redirect("/dashboard")
+
     return render_template("index.html")
 
 # GET /:link
 
 @root_bp.route("/<string:link>")
-def redirect(link: str):
+def redirect_link(link: str):
     records = None
 
     try:

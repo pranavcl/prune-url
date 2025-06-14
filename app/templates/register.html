@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PruneURL | Register</title>
+    </head>
+
+    <body>
+        <h1>Register</h1>
+
+        <form action="/register" method="post">
+            <a href="/">Return to home</a><br><br>
+
+            <label for="email">Email: </label>
+            <input name="email" type="email" minlength="6" maxlength="128" required><br><br>
+
+            <label for="password">Password: </label>
+            <input name="password" type="password" minlength="6" maxlength="128" required><br><br>
+
+            <label for="repeat-password">Repeat Password: </label>
+            <input name="repeat-password" type="password" minlength="6" maxlength="128" required><br><br>
+
+            <input type="submit" value="Sign Up"><br><br>
+        </form>
+    </body>
+</html>

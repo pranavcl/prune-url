@@ -24,9 +24,14 @@ if not environ.get("DB_PASS"):
     logger.error(f"⛔ You have not set the DB_PASS variable in your .env file (password for user {environ.get("DB_USER", "postgres")})")
     exit()
 
+if not environ.get("SECRET_KEY"):
+    logger.error(f"⛔ You have not set the SECRET_KEY variable in your .env file (required for issuing JWTs)")
+    exit()
+
 conn, cur = db_connect(logger) # Connect to database
 
 INTERNAL_SERVER_ERROR_MSG = "An internal server error occured while trying to process your request<br><a href=\"/\">Return to home</a>"
+jwt_secret_key: str = environ.get("SECRET_KEY", "")
 
 # Create Flask app
 
@@ -47,6 +52,16 @@ limiter = Limiter(
 
 from app.routes.root import root_bp
 from app.routes.prune import prune_bp
+from app.routes.login import login_bp
+from app.routes.register import register_bp
+from app.routes.forgot_password import forgot_password_bp
+from app.routes.dashboard import dashboard_bp
+from app.routes.logout import logout_bp
 
 app.register_blueprint(root_bp)
 app.register_blueprint(prune_bp)
+app.register_blueprint(login_bp)
+app.register_blueprint(register_bp)
+app.register_blueprint(forgot_password_bp)
+app.register_blueprint(dashboard_bp)
+app.register_blueprint(logout_bp)

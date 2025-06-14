@@ -8,14 +8,28 @@
 
     <body>
         <h1>Welcome to PruneURL!</h1>
-        <p>This is a simple URL pruning service.</p>
+        <p>This is a simple URL shortening service.</p>
 
-        <form action="/prune" method="post">
+        <!-- <form action="/prune" method="post">
             <label for="url">Enter URL to prune:</label>
             <input type="text" id="url" name="url" required>
             <button type="submit">Prune URL</button>
+        </form> -->
+
+        <form action="/login" method="get">
+            <button action="/login" method="get">Login</button>
         </form>
 
-        <p>Made by pranavcl</p>
+        <br>
+
+        <form action="/register" method="get">
+            <button action="/register" method="get">Register</button>
+        </form>
+
+        <br>
+
+        <form action="/forgot-password" method="get">
+            <button action="/forgot-password" method="get">Forgot Password</button>
+        </form>
     </body>
 </html>
