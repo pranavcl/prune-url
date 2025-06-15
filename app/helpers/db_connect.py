@@ -35,14 +35,25 @@ def db_connect(logger: Logger):
     try:
         cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
         records = cur.fetchall()
+
+        if ("links",) in records and ("users",) in records and ("reset_password",) in records:
+            logger.info("✅ Required tables already exist")
+            return (conn, cur)
         
         if ("links",) not in records:
-            cur.execute("CREATE TABLE links (made_by varchar, short_url varchar, redirect varchar, visits int)")
-            cur.execute("CREATE TABLE users (email varchar, password varchar, role varchar, links_made int, links_limit int)")
+            cur.execute("CREATE TABLE links (made_by varchar, short_url varchar, redirect varchar, visits int, created timestamp);")
             conn.commit()
-            logger.info("✅ Created required table(s)")
-        else:
-            logger.info("✅ Required tables already exist")
+            logger.info("✅ Created links table")
+
+        if ("users",) not in records:
+            cur.execute("CREATE TABLE users (email varchar, password varchar, role varchar, links_made int, links_limit int, created timestamp);")
+            conn.commit()
+            logger.info("✅ Created users table")
+
+        if ("reset_password",) not in records:
+            cur.execute("CREATE TABLE reset_password (email varchar, hashed_token varchar, expires timestamp);")
+            conn.commit()
+            logger.info("✅ Created reset_password table")
     except Exception:
         logger.error(print_exc())
         logger.error(f"⛔ Failed to create required table(s)")

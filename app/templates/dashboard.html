@@ -17,5 +17,19 @@
         <p>Welcome to your dashboard! You are logged in as:</p>
         <p id="email_label" data-email="{{ email|e }}">*********</p>
         <a href="#" id="toggle_email" onclick="toggleEmail(event)">Show</a>
+
+        <h2>Prune a URL</h2>
+
+        <p>You have used {{ linksUsed }}/{{ linksLimit }} link slots.</p>
+
+        <form action="/prune" method="post">
+            <label for="url">Enter URL to prune:</label>
+            <input type="text" id="url" name="url" required>
+            <button type="submit">Prune URL</button>
+        </form>
+
+        <h2>Your existing URLs</h2>
+
+        {{ linksData }}
     </body>
 </html>

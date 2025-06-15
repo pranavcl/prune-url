@@ -1,3 +1,5 @@
+import datetime
+
 from flask import render_template, Blueprint, request
 from app import conn, cur, logger, limiter, INTERNAL_SERVER_ERROR_MSG
 from validators import email
@@ -51,7 +53,7 @@ def post_register():
         password = password.encode("utf-8")
         hashedPassword = hashpw(password, salt).decode("utf-8")
 
-        cur.execute("INSERT INTO users VALUES (%s, %s, 'user', 0, 100)", (email_input, hashedPassword))
+        cur.execute("INSERT INTO users VALUES (%s, %s, 'user', 0, 100, %s)", (email_input, hashedPassword, str(datetime.datetime.now())))
         conn.commit()
         logger.info(f"✨ New user registered with email {email_input}")
         return "Account registered successfully! You can login now.<br><a href=\"/\">Return to home</a>"

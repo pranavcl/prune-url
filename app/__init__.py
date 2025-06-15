@@ -55,6 +55,7 @@ from app.routes.prune import prune_bp
 from app.routes.login import login_bp
 from app.routes.register import register_bp
 from app.routes.forgot_password import forgot_password_bp
+from app.routes.reset_password import reset_password_bp
 from app.routes.dashboard import dashboard_bp
 from app.routes.logout import logout_bp
 
@@ -63,5 +64,6 @@ app.register_blueprint(prune_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(register_bp)
 app.register_blueprint(forgot_password_bp)
+app.register_blueprint(reset_password_bp)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(logout_bp)

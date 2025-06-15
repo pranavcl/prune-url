@@ -32,16 +32,16 @@ def redirect_link(link: str):
     if not records:
         return INTERNAL_SERVER_ERROR_MSG, 500
 
-    if link != records[0]:
+    if link != records[1]:
         return "Requested URL was not found<br><a href=\"/\">Return to home</a>", 404
     
     try:
         cur.execute("UPDATE links SET visits = visits + 1 WHERE short_url = %s", (link,))
     except Exception:
         logger.error(print_exc())
-        logger.error(f"⛔ Failed to increment visits value for {environ.get("BASE_URL", "http://localhost")}:{environ.get("PORT", 2000)}/{link}")
+        logger.error(f"⛔ Failed to increment visits value for {environ.get("BASE_URL", "http://localhost:2000")}/{link}")
         return INTERNAL_SERVER_ERROR_MSG, 500
 
-    logger.info(f"🛫 Redirecting {environ.get("BASE_URL", "http://localhost")}:{environ.get("PORT", 2000)}/{link} -> {records[1]} ({records[2]} visits)")
+    logger.info(f"🛫 Redirecting {environ.get("BASE_URL", "http://localhost:2000")}/{link} -> {records[1]} ({records[2]} visits)")
 
-    return render_template("redirect_warning.html", target_url=records[1])
+    return render_template("redirect_warning.html", target_url=records[2])
