@@ -56,7 +56,7 @@ def get_search_users():
     params: list[Any] = []
 
     if email_regex:
-        print(email_regex)
+        # print(email_regex)
         query += " WHERE email ILIKE %s"
         params.append(f"%{email_regex}%")
 
