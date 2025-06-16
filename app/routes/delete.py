@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template
 from app.helpers.check_jwt import check_jwt
 from traceback import print_exc
 from app import links_length, logger, INTERNAL_SERVER_ERROR_MSG, cur, conn
+from os import environ
 
 delete_bp = Blueprint("delete", __name__)
 
@@ -28,7 +29,7 @@ def delete_delete(link: str):
     
     try:
         cur.execute("SELECT * FROM links WHERE short_url = %s AND made_by = %s;", (link, jwt_token["email"]))
-        records = cur.fetchall()
+        records = cur.fetchone()
 
         if not records:
             return render_template("message.html", message = f"Link not found.{GO_BACK}"), 400
@@ -36,10 +37,10 @@ def delete_delete(link: str):
         cur.execute("DELETE FROM links WHERE short_url = %s AND made_by = %s;", (link, jwt_token["email"]))        
         cur.execute("UPDATE users SET links_made = links_made - 1 WHERE email = %s;", (jwt_token["email"],))
         conn.commit()
+        logger.info(f"⛓️‍💥 Redirect destroyed: {environ.get("BASE_URL", "http://localhost:2000")}/{link} -> {records[2]}")
     except Exception:
         print_exc()
         logger.error("⛔ Failed to delete link")
         return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
 
-
-    return render_template("message.html", message = "Link successfully deleted.{GO_BACK}")
+    return render_template("message.html", message = f"Link successfully deleted.{GO_BACK}")

@@ -5,7 +5,7 @@ let label: HTMLParagraphElement;
 let link: HTMLAnchorElement;
 let links_div: HTMLDivElement;
 
-const toggleEmail = (e) => {
+const toggleEmail = (e: Event) => {
     e.preventDefault();
 
     if(shown) {

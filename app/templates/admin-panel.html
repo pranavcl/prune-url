@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}PruneURL | Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Panel</h1>
+<script src="../static/dashboard.js"></script>
+
+<br>
+<form action="/logout" method="get">
+    <input type="submit" value="Logout">
+</form>
+
+<p>Welcome to your dashboard! You are logged in as:</p>
+<p id="email_label" data-email="{{ email|e }}">*********</p>
+<a href="#" id="toggle_email" onclick="toggleEmail(event)">Show</a>
+
+<h2>Prune a URL</h2>
+
+<p>You have used {{ linksUsed }}/{{ linksLimit }} link slots.</p>
+
+<form action="/prune" method="post">
+    <label for="url">Enter URL to prune:</label>
+    <input type="text" id="url" name="url" required>
+    <br><br>
+    <button type="submit">Prune URL</button>
+</form>
+
+<h2>Your existing URLs</h2>
+
+<div id="links_div" data-links = "{{ linksData }}">
+
+</div>
+
+<h2>Ban a user</h2>
+
+<p><b>Note:</b> Banning a user will delete their accounts and all links created by them.</p>
+<form action="/ban" method="post">
+    <label for="ban_email">Enter email to ban:</label>
+    <input type="email" id="ban_email" name="ban_email" required>
+    <br><br>
+
+    <button type="submit">Ban User</button>
+</form>
+
+<h2>Change user limits</h2>
+
+<form action="/change-limits" method="post">
+    <label for="change_email">Enter email to change limits:</label>
+    <input type="email" id="change_email" name="change_email" required>
+    <br><br>
+    
+    <label for="links_limit">New link limit:</label>
+    <input type="number" id="links_limit" name="links_limit" min="1" required>
+    <br><br>
+    
+    <button type="submit">Change Limits</button>
+</form>
+
+<h2>Delete any link</h2>
+
+<form action="/delete-link" method="post">
+    <label for="delete_link">Enter link to delete:</label>
+    <input type="text" id="delete_link" name="delete_link" required>
+    <br><br>
+
+    <button type="submit">Delete Link</button>
+</form>
+
+<h2>Search & Filter Users</h2>
+
+<form action="/search-users" method="get">
+    <label for="search_email">Search by email:</label>
+    <input type = "text" id="search_email" name="search_email" placeholder="Enter email to search">
+    
+    <p>Sort by:</p>
+
+    <input type="radio" id="date_created" name="sort_by" value="date_created">
+    <label for="date_created">Date created</label>
+    <input type="radio" id="links_made" name="sort_by" value="links_made">
+    <label for="links_made">Links made</label>
+    <input type="radio" id="links_limit" name="sort_by" value="links_limit">
+    <label for="links_limit">Links limit</label>
+    <input type="radio" id="total_views" name="sort_by" value="total_views">
+    <label for="total_views">Total views</label>
+    <br><br>
+
+    <label for="sort_order">Sort order:</label>
+    <select id="sort_order" name="sort_order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+    <br><br>
+
+    <input type="hidden" id="page" name="page" value="1">
+    
+    <button type="submit">Search & Filter</button>
+</form>
+
+<h2>Search & Filter Links</h2>
+
+<form action="/search-links" method="get">
+    <label for="search_link">Search by link:</label>
+    <input type="text" id="search_link" name="search_link" placeholder="Enter link to search">
+    
+    <p>Sort by:</p>
+
+    <input type="radio" id="link_date_created" name="link_sort_by" value="date_created">
+    <label for="link_date_created">Date created</label>
+    <input type="radio" id="link_views" name="link_sort_by" value="views">
+    <label for="link_views">Views</label>
+    <br><br>
+
+    <label for="link_sort_order">Sort order:</label>
+    <select id="link_sort_order" name="link_sort_order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+    <br><br>
+    
+    <button type="submit">Search & Filter</button>
+</form>
+
+<h2>Make user admin</h2>
+
+<p><b>Note:</b> This can only be undone on the server shell. Only make trusted users admin!</p>
+
+<form action="/make-admin" method="post">
+    <label for="admin_email">Enter email to make admin:</label>
+    <input type="email" id="admin_email" name="admin_email" required>
+    <br><br>
+
+    <button type="submit">Make Admin</button>
+</form>
+
+{% endblock %}

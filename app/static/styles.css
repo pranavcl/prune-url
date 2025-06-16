@@ -33,7 +33,7 @@ button:hover, input[type="submit"]:hover {
 
 .container {
     width: 50%;
-    height: 100%;
+    min-height: 100%;
     margin: auto;
     padding: 16px;
     background-color: #FFFFFF;

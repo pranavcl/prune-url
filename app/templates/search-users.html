@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}PruneURL | Search Users{% endblock %}
+{% block content %}
+
+<h1>Search Users</h1>
+<script src="../static/search_users.js"></script>
+
+<p>Viewing page {{ current_page }} / {{ total_pages }}</p>
+<a href="/">Return to dashboard</a>
+
+<br><br>
+
+<div id="users-div" data-users="{{ data_users }}">
+
+</div>
+
+{% endblock %}

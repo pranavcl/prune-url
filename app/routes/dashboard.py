@@ -32,7 +32,6 @@ def get_dashboard():
         if not records:
             return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
 
-
         linksUsed=records[3]
         linksLimit=records[4]
     except:
@@ -54,5 +53,7 @@ def get_dashboard():
         logger.error(f"⛔ Failed to fetch links DB")
         return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
 
-
-    return render_template("dashboard.html", email=jwt_token["email"], linksUsed=linksUsed, linksLimit=linksLimit, linksData=linksData), 200
+    if jwt_token["role"] == "admin":
+        return render_template("admin-panel.html", email=jwt_token["email"], linksUsed=linksUsed, linksLimit=linksLimit, linksData=linksData), 200
+    else:
+        return render_template("dashboard.html", email=jwt_token["email"], linksUsed=linksUsed, linksLimit=linksLimit, linksData=linksData), 200

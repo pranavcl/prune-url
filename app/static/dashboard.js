@@ -1,9 +1,10 @@
-var email = "";
-var shown = false;
-var label;
-var link;
-var links_div;
-var toggleEmail = function (e) {
+"use strict";
+let email = "";
+let shown = false;
+let label;
+let link;
+let links_div;
+const toggleEmail = (e) => {
     e.preventDefault();
     if (shown) {
         label.textContent = "*********";
@@ -15,17 +16,17 @@ var toggleEmail = function (e) {
     }
     shown = !shown;
 };
-window.onload = function () {
+window.onload = () => {
     var _a;
     label = document.getElementById("email_label");
     link = document.getElementById("toggle_email");
     links_div = document.getElementById("links_div");
     email = (_a = label.dataset.email) !== null && _a !== void 0 ? _a : "";
-    var linksDataStr = links_div.dataset.links;
+    let linksDataStr = links_div.dataset.links;
     if (!linksDataStr) {
         return;
     }
-    var linksData = [];
+    let linksData = [];
     try {
         linksData = JSON.parse(linksDataStr);
     }
@@ -33,48 +34,48 @@ window.onload = function () {
         console.error("Failed to parse linksData:", e);
     }
     // Create table
-    var table = document.createElement("table");
+    const table = document.createElement("table");
     table.style.width = "100%";
     table.style.border = "1px solid #000000";
     // Table header
-    var header = table.createTHead();
-    var headerRow = header.insertRow();
-    ["Shortened URL", "Redirects to", "Visits", "Created", ""].forEach(function (text) {
-        var th = document.createElement("th");
+    const header = table.createTHead();
+    const headerRow = header.insertRow();
+    ["Shortened URL", "Redirects to", "Visits", "Created", ""].forEach(text => {
+        const th = document.createElement("th");
         th.textContent = text;
         headerRow.appendChild(th);
     });
     // Table body
-    var tbody = table.createTBody();
-    linksData.forEach(function (row) {
-        var tr = tbody.insertRow();
-        var shortCell = tr.insertCell();
-        var shortLink = document.createElement("a");
-        shortLink.href = "/".concat(row[0]);
-        shortLink.textContent = "".concat(window.location.origin, "/").concat(row[0]);
+    const tbody = table.createTBody();
+    linksData.forEach(row => {
+        const tr = tbody.insertRow();
+        const shortCell = tr.insertCell();
+        const shortLink = document.createElement("a");
+        shortLink.href = `/${row[0]}`;
+        shortLink.textContent = `${window.location.origin}/${row[0]}`;
         shortLink.target = "_blank";
         shortCell.appendChild(shortLink);
         // Redirects to
-        var urlCell = tr.insertCell();
-        var urlLink = document.createElement("a");
-        urlLink.href = urlLink.textContent = "".concat(row[1]);
+        const urlCell = tr.insertCell();
+        const urlLink = document.createElement("a");
+        urlLink.href = urlLink.textContent = `${row[1]}`;
         urlLink.target = "_blank";
         urlCell.appendChild(urlLink);
         // Visits
-        var visitsCell = tr.insertCell();
+        const visitsCell = tr.insertCell();
         visitsCell.textContent = row[2];
         // Created
-        var createdCell = tr.insertCell();
+        const createdCell = tr.insertCell();
         createdCell.textContent = row[3];
         // Delete link
-        var deleteCell = tr.insertCell();
-        var deleteForm = document.createElement("form");
-        deleteForm.action = "/delete/".concat(row[0]);
+        const deleteCell = tr.insertCell();
+        const deleteForm = document.createElement("form");
+        deleteForm.action = `/delete/${row[0]}`;
         deleteForm.method = "POST";
-        var deleteButton = document.createElement("input");
+        const deleteButton = document.createElement("input");
         deleteButton.type = "submit";
         deleteButton.value = "Delete";
-        deleteButton.onclick = function (e) {
+        deleteButton.onclick = (e) => {
             if (!confirm("Are you sure you want to delete this link?")) {
                 e.preventDefault();
             }

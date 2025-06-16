@@ -54,7 +54,7 @@ def post_register():
         password = password.encode("utf-8")
         hashedPassword = hashpw(password, salt).decode("utf-8")
 
-        cur.execute("INSERT INTO users VALUES (%s, %s, 'user', 0, 100, %s)", (email_input, hashedPassword, str(datetime.datetime.now())))
+        cur.execute("INSERT INTO users VALUES (%s, %s, 'user', 0, 100, %s, 0)", (email_input, hashedPassword, str(datetime.datetime.now())))
         conn.commit()
         logger.info(f"✨ New user registered with email {email_input}")
         return render_template("message.html", message = "Account registered successfully! You can login now.<br><a href=\"/\">Return to home</a>")

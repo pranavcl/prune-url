@@ -34,6 +34,7 @@ def redirect_link(link: str):
     
     try:
         cur.execute("UPDATE links SET visits = visits + 1 WHERE short_url = %s", (link,))
+        cur.execute("UPDATE users SET total_views = total_views + 1 WHERE email = %s", (records[0],))
     except Exception:
         logger.error(print_exc())
         logger.error(f"⛔ Failed to increment visits value for {environ.get("BASE_URL", "http://localhost:2000")}/{link}")

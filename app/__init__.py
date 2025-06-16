@@ -59,13 +59,19 @@ limiter = Limiter(
 
 from app.routes.root import root_bp
 from app.routes.prune import prune_bp
-from app.routes.login import login_bp
-from app.routes.register import register_bp
-from app.routes.forgot_password import forgot_password_bp
-from app.routes.reset_password import reset_password_bp
+from app.routes.auth.login import login_bp
+from app.routes.auth.register import register_bp
+from app.routes.auth.forgot_password import forgot_password_bp
+from app.routes.auth.reset_password import reset_password_bp
 from app.routes.dashboard import dashboard_bp
-from app.routes.logout import logout_bp
+from app.routes.auth.logout import logout_bp
 from app.routes.delete import delete_bp
+from app.routes.admin.make_admin import make_admin_bp
+from app.routes.admin.delete_link import delete_link_bp
+from app.routes.admin.change_limits import change_limits_bp
+from app.routes.admin.ban import ban_bp
+from app.routes.admin.search_users import search_users_bp
+from app.routes.admin.search_links import search_links_bp
 
 app.register_blueprint(root_bp)
 app.register_blueprint(prune_bp)
@@ -76,3 +82,9 @@ app.register_blueprint(reset_password_bp)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(logout_bp)
 app.register_blueprint(delete_bp)
+app.register_blueprint(make_admin_bp)
+app.register_blueprint(delete_link_bp)
+app.register_blueprint(change_limits_bp)
+app.register_blueprint(ban_bp)
+app.register_blueprint(search_users_bp)
+app.register_blueprint(search_links_bp)
