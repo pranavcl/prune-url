@@ -27,20 +27,18 @@ def redirect_link(link: str):
     except Exception:
         logger.error(print_exc())
         logger.error("⛔ Failed to fetch links from DB")
-        return INTERNAL_SERVER_ERROR_MSG, 500
+        return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
 
-    if not records:
-        return INTERNAL_SERVER_ERROR_MSG, 500
-
-    if link != records[1]:
-        return "Requested URL was not found<br><a href=\"/\">Return to home</a>", 404
+    if not records or link != records[1]:
+        return render_template("message.html", message = "Requested URL was not found<br><a href=\"/\">Return to home</a>"), 404
     
     try:
         cur.execute("UPDATE links SET visits = visits + 1 WHERE short_url = %s", (link,))
     except Exception:
         logger.error(print_exc())
         logger.error(f"⛔ Failed to increment visits value for {environ.get("BASE_URL", "http://localhost:2000")}/{link}")
-        return INTERNAL_SERVER_ERROR_MSG, 500
+        return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
+
 
     logger.info(f"🛫 Redirecting {environ.get("BASE_URL", "http://localhost:2000")}/{link} -> {records[1]} ({records[2]} visits)")
 

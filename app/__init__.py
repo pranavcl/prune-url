@@ -31,6 +31,13 @@ if not environ.get("SECRET_KEY"):
 conn, cur = db_connect(logger) # Connect to database
 
 INTERNAL_SERVER_ERROR_MSG = "An internal server error occured while trying to process your request<br><a href=\"/\">Return to home</a>"
+links_length = environ.get("LINKS_LENGTH")
+
+if not links_length:
+    links_length = 5
+else:
+    links_length = int(links_length)
+
 jwt_secret_key: str = environ.get("SECRET_KEY", "")
 
 # Create Flask app
@@ -58,6 +65,7 @@ from app.routes.forgot_password import forgot_password_bp
 from app.routes.reset_password import reset_password_bp
 from app.routes.dashboard import dashboard_bp
 from app.routes.logout import logout_bp
+from app.routes.delete import delete_bp
 
 app.register_blueprint(root_bp)
 app.register_blueprint(prune_bp)
@@ -67,3 +75,4 @@ app.register_blueprint(forgot_password_bp)
 app.register_blueprint(reset_password_bp)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(logout_bp)
+app.register_blueprint(delete_bp)

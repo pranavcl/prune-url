@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PruneURL | Login</title>
-    </head>
+{% extends "base.html" %}
+{% block title %}PruneURL | Login{% endblock %}
+{% block content %}
+<h1>Login</h1>
 
-    <body>
-        <h1>Login</h1>
+<form action="/login" method="post">
+    <a href="/">Return to home</a><br><br>
 
-        <form action="/login" method="post">
-            <a href="/">Return to home</a><br><br>
+    <label for="email">Email: </label>
+    <input name="email" minlength="6" maxlength = "128" required><br><br>
 
-            <label for="email">Email: </label>
-            <input name="email" minlength="6" maxlength = "128" required><br><br>
+    <label for="password">Password: </label>
+    <input name="password" type="password" minlength="6" maxlength="128" required><br><br>
 
-            <label for="password">Password: </label>
-            <input name="password" type="password" minlength="6" maxlength="128" required><br><br>
-
-            <input type="submit" value="Sign In"><br><br>
-            <a href="/forgot-password">Forgot Password?</a>
-        </form>
-    </body>
-</html>
+    <input type="submit" value="Sign In"><br><br>
+    <a href="/forgot-password">Forgot Password?</a>
+</form>
+{% endblock %}

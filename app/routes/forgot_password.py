@@ -24,13 +24,13 @@ def post_forgot_password():
     email_input = request.form.get("email")
 
     if not email_input:
-        return f"You did not enter an email address.{GO_BACK}", 400
+        return render_template("message.html", message = f"You did not enter an email address.{GO_BACK}"), 400
     
     if len(email_input) < 6 or len(email_input) > 128:
-        return f"Email address must be between 6 and 128 characters in length.{GO_BACK}", 400
+        return render_template("message.html", message = f"Email address must be between 6 and 128 characters in length.{GO_BACK}"), 400
 
     if not email(email_input):
-        return f"Please enter a valid email address.{GO_BACK}", 400
+        return render_template("message.html", message = f"Please enter a valid email address.{GO_BACK}"), 400
     
     email_input = email_input.lower()
     
@@ -43,7 +43,7 @@ def post_forgot_password():
         records = cur.fetchone()
 
         if not records:
-            return f"{SUCCESS_MSG}{GO_BACK}", 200
+            return render_template("message.html", message = f"{SUCCESS_MSG}{GO_BACK}")
         
         token = token_bytes(16).hex()
         hashedToken = hashpw(token.encode("utf-8"), gensalt())
@@ -51,7 +51,8 @@ def post_forgot_password():
     except Exception:
         print_exc()
         logger.error(f"⛔ Failed to fetch users")
-        return INTERNAL_SERVER_ERROR_MSG, 500
+        return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
+
     
     url = f"{environ.get("BASE_URL", "http://localhost:2000")}/reset-password?email={email_input}&token={token}"
 
@@ -62,16 +63,17 @@ def post_forgot_password():
         logger.info(f"🔄 Password reset requested for {email_input}")
 
         # ONLY FOR DEBUGGING: comment in production
-        print(url) 
+        # print(url) 
     except:
         print_exc()
         logger.error(f"⛔ Failed to store reset token")
-        return INTERNAL_SERVER_ERROR_MSG, 500
+        return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
+
     
     # Implement sending mail
 
     if not environ.get("MAIL_SERVER") or not environ.get("MAIL_PORT") or not environ.get("MAIL_USERNAME") or not environ.get("MAIL_PASSWORD"):
-        return f"This server is not configured to send emails. Please contact your server administrator.{GO_BACK}", 500
+        return render_template("message.html", message = f"This server is not configured to send emails. Please contact your server administrator.{GO_BACK}"), 500
     
     try:
         mail = Mail()
@@ -94,6 +96,7 @@ def post_forgot_password():
     except Exception:
         print_exc()
         logger.error(f"⛔ Failed to send reset password link")
-        return INTERNAL_SERVER_ERROR_MSG, 500
+        return render_template("message.html", message = INTERNAL_SERVER_ERROR_MSG), 500
 
-    return f"{SUCCESS_MSG}{GO_BACK}", 200
+
+    return render_template("message.html", message = f"{SUCCESS_MSG}{GO_BACK}"), 200

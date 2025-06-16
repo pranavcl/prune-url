@@ -1,0 +1,71 @@
+body {
+    background-color: #3F84E5;
+    margin: 0px;
+}
+
+html, body {
+    height: 100%;
+}
+
+h1 {
+    margin: 0px;
+}
+
+input, button {
+    font-family: Inter, Helvetica, sans-serif;
+}
+
+button, input[type="submit"] {
+    border: 0px;
+    background-color: #232ED1;
+    padding: 8px;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+button:hover, input[type="submit"]:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+    transition: 1s;
+}
+
+.container {
+    width: 50%;
+    height: 100%;
+    margin: auto;
+    padding: 16px;
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: Inter, Helvetica, sans-serif;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+}
+
+#links_div {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+#logo {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+@media (max-width: 1600px) {
+    .container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+}

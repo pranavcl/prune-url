@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PruneURL</title>
-    </head>
+{% extends "base.html" %}
+{% block title %}PruneURL | Home{% endblock %}
+{% block content %}
+<h1 id="logo">PruneURL</h1>
+<h2>Welcome to PruneURL! 🌐</h2>
+<p>This is a simple URL shortening service made in Python and Flask.</p>
 
-    <body>
-        <h1>Welcome to PruneURL!</h1>
-        <p>This is a simple URL shortening service.</p>
+<form action="/login" method="get">
+    <button action="/login" method="get">Login</button>
+</form>
 
-        <form action="/login" method="get">
-            <button action="/login" method="get">Login</button>
-        </form>
+<br>
 
-        <br>
+<form action="/register" method="get">
+    <button action="/register" method="get">Register</button>
+</form>
 
-        <form action="/register" method="get">
-            <button action="/register" method="get">Register</button>
-        </form>
+<br>
 
-        <br>
-
-        <form action="/forgot-password" method="get">
-            <button action="/forgot-password" method="get">Forgot Password</button>
-        </form>
-    </body>
-</html>
+<form action="/forgot-password" method="get">
+    <button action="/forgot-password" method="get">Forgot Password</button>
+</form>
+{% endblock %}

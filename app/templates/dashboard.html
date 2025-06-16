@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PruneURL | Dashboard</title>
-        <script src="../static/dashboard.js"></script>
-    </head>
+{% extends "base.html" %}
+{% block title %}PruneURL | Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<script src="../static/dashboard.js"></script>
 
-    <body>
-        <h1>Dashboard</h1>
+<form action="/logout" method="get">
+    <input type="submit" value="Logout">
+</form>
 
-        <form action="/logout" method="get">
-            <input type="submit" value="Logout">
-        </form>
+<p>Welcome to your dashboard! You are logged in as:</p>
+<p id="email_label" data-email="{{ email|e }}">*********</p>
+<a href="#" id="toggle_email" onclick="toggleEmail(event)">Show</a>
 
-        <p>Welcome to your dashboard! You are logged in as:</p>
-        <p id="email_label" data-email="{{ email|e }}">*********</p>
-        <a href="#" id="toggle_email" onclick="toggleEmail(event)">Show</a>
+<h2>Prune a URL</h2>
 
-        <h2>Prune a URL</h2>
+<p>You have used {{ linksUsed }}/{{ linksLimit }} link slots.</p>
 
-        <p>You have used {{ linksUsed }}/{{ linksLimit }} link slots.</p>
+<form action="/prune" method="post">
+    <label for="url">Enter URL to prune:</label>
+    <input type="text" id="url" name="url" required>
+    <button type="submit">Prune URL</button>
+</form>
 
-        <form action="/prune" method="post">
-            <label for="url">Enter URL to prune:</label>
-            <input type="text" id="url" name="url" required>
-            <button type="submit">Prune URL</button>
-        </form>
+<h2>Your existing URLs</h2>
 
-        <h2>Your existing URLs</h2>
+<div id="links_div" data-links = "{{ linksData }}">
 
-        {{ linksData }}
-    </body>
-</html>
+</div>
+{% endblock %}
